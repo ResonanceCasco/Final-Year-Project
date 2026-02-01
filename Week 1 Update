@@ -1,0 +1,27 @@
+Activities carried out this week:
+
+1. pfSense Installation
+Downloaded pfSense 2.7.2 ISO and installed it in a QEMU VM with 1GB RAM, 1 vCPU, and 8GB storage. Configured WAN (vtnet0) and LAN (vtnet1) interfaces.
+
+2. Network Interface Setup
+Configured WAN with the static IP 192.168.122.100/24 and LAN as 192.168.10.1/24 with DHCP enabled (range .100-.200). 
+
+Plans for net period:
+
+1. pfSense Installation
+Download pfSense 2.7.2 ISO and install it in a QEMU VM. Configure WAN (vtnet0) and LAN (vtnet1) interfaces. 
+2. Network Interface Setup 
+
+Add 3 additional NICs (vtnet2-4) for VLANs.
+
+3. VLAN Configuration
+
+Create and configure 4 VLANs through pfSense web GUI: Clinical, Admin, IoT, and Data. Enable DHCP on all.
+
+4. Firewall Rules (Microsegmentation)
+
+Configure Zero Trust firewall rules 
+
+5. Ubuntu Admin VM
+
+Create an Ubuntu VM to access pfSense web interface due to host-to-VM network isolation.
