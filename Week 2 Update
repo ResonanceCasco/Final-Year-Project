@@ -1,0 +1,33 @@
+Activities carried out this week:
+
+1. Windows Server 2019 DC
+I am currently installing and configuring Windows Server 2019 as the Domain Controller with Active Directory on the ADMIN VLAN (192.168.20.x)
+
+2. Network Interface Setup
+For this week I added 3 additional NICs (vtnet2-4) for VLANs.
+
+3. Ubuntu Admin VM
+Created a Ubuntu VM to access pfSense web interface due to host-to-VM network isolation.
+
+4. VLAN Configuration
+Created and configured 4 VLANs through pfSense web GUI. Clinical (192.168.10.0/24), Admin (192.168.20.0/24), IoT (192.168.30.0/24), Data (192.168.40.0/24). DHCP was enabled on all.
+
+5. Firewall Rules (Microsegmentation)
+Configured Zero Trust firewall rules. Admin has full access to VLANs, Clinical HTTPS-only has access to Data, IoT HTTPS-only to Data, and Data is fully isolated.
+
+
+6. Delays:
+
+There are no items delayed at the moment. The projec is currently running as scheduled.
+
+
+Plans for next period:
+
+1. Windows Server 2019 DC
+Install and configure Windows Server 2019 as Domain Controller with Active Directory on the ADMIN VLAN (192.168.20.x)
+
+2. Active Directory Setup 
+Configure AD users (doctors, nurses, staff), group policies, and role-based access control
+
+3. MFA Configuration
+Implement MFA integrated with AD
