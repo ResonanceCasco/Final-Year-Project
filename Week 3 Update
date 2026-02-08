@@ -1,0 +1,37 @@
+Activities carried out this week:
+
+1. LDAP Configuration
+Configured LDAP authentication server in pfSense to integrate with the Active Directory for centralised authentication.
+Status - In Progress
+
+2. Active Directory Installation
+Installed and configured the Active Directory Domain Services on the Windows Server 2019. Created the “healthcare.local” domain wih DNS integration.
+Status - Complete
+
+3. User Account Creation
+Created 4 test users in Active Directory: ssharky (clinical staff), ghouse (doctor and clinical staff), mratched (nurse and clinical staff), and bcalhoun (IT admin).
+Status - Complete
+
+4. Security Group Setup
+Created 4 security groups: Clinical_Staff, Doctors, Nurses, and IT_Admins. Assigning the appropriate users to each group for RBAC.
+Status - Complete
+
+5. Network Testing
+Verified connectivity between pfSense and DC Server. Confirmed the LDAP port is accessible via telnet test.
+Status - Complete
+
+6. No items were delayed
+
+Plans for next period:
+
+1. Complete LDAP Integration
+Troubleshoot and finalises pfSense-AD authentication. Test user login with AD credentials through Authentication in Diagnostics tab of the pfSense web GUI.  
+
+2. MFA Deployment
+Implement MFA for user access control integrated with Active Directory.
+
+3. Conditional Access Policies
+Configure time-based and location-based access policies in pfSense for Zero Trust verification.
+
+4. Begin Blockchain Integration
+Start Solana blockchain setup for immutable audit logging.
