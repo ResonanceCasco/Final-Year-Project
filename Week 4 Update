@@ -1,0 +1,37 @@
+Activities carried out this week:
+
+1. Solana Node Setup - In Progress
+Downloaded Ubuntu Server 24.04 LTS and began installation of Solana
+blockchain node VM (512MB RAM, 1 CPU, 20GB disk).
+
+2. LDAP/AD Integration - Complete
+Succesfully configured pfSense LDAP authentication with AD. Tested
+authentication with user ssharkey.
+
+3. Conditional Access Policies - Complete
+Created Business_Hours schedule (8am-5pm Mon-Fri) and applied time
+based access control to Clinical VLAN firewall rules.
+
+4. MFA - Delayed
+There was no built in OTP/MFA options visible yet. So MFA has been
+skipped to continue with other Week 10-12 tasks. MFA can be added
+later using a FreeRADIUS package (once there is internet access to
+download it) or implement it at the application level.
+
+Plans for the next period:
+
+1. Complete Solana Node
+Finish Ubuntu installation, configure static IP in DATA VLAN (192.168.40.x), install
+Solana CLI and connect to devnet
+
+2. Blockchain Audit Logging
+Develop Pyhton Scripts to log authentication events and access attempts to
+Solana blockchain with immutable timestamps.
+
+3. IoMT Device Emulators
+Create 3 Alpine Linux Vms (patient monitor, infusion pump, access control) in IoT
+VLAN with certifcate authentication.
+
+4. EHR/File Server Setup
+Deploy Ubuntu Server as EHR database with encrypted storage (LUKS) in DATA
+VLAN.
