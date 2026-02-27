@@ -85,7 +85,7 @@ def backup_status():
     """Get backup verification status"""
     records_file = os.path.join(BACKUP_DIR, "backup_records.json")
 
-    if not os.path.exists(records file):
+    if not os.path.exists(records_file):
         return jsonify({
             "total_backups": 0,
             "verified": 0,
