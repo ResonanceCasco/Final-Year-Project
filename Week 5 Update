@@ -1,0 +1,51 @@
+Activities carried out this week:
+
+1. Alpine Linux IoMT Setup - In Progress
+Downloaded Alpine Linux virt ISO and attempted IoMT device VM
+creation. Configured diskless mode due to package mirror connectivity
+issues.
+
+2. Python Blockchain Scripts - In Progress
+Created project structure for blockchain scripts with folders for logs,
+backups, and keys. Programming a script outline called auth_logger.py
+for logging authentication events to Solana.
+
+3. Virtual Network Topology - Complete
+Created 4 separate virtual networks in virt manager for proper VLAN
+isolation: vlan-clinical (192.168.10.0/24), vlan-admin (192.168.20.0/24),
+vlan-iot (192.168.30.0/24), vlan-data (192.168.40.0/24).
+
+4. pfSense Network Reconfiguration - Complete
+Reconfigured all 5 pfSense interfaces to connect to appropriate virtual
+networks. Set static IPs and DHCP ranges for each VLAN through
+console.
+
+5. Solana CLI Installation - Complete
+Installed Solana CLI tools (v1.18.26) on Manjaro host. Configured
+connection to devnet and created audit wallet keypair for blockchain
+logging.
+
+6. Solana Node Installation - Delayed
+Errors caused by crashes while installing the kernel along with
+connectivity and mirror issues has delayed completion of this activity
+
+Plans for the next period:
+
+1. Complete Solana Wallet Funding
+Obtain devnet SOL tokens via web faucet to enable blockchain transaction testing.
+
+2. Implement Python Logging Functions
+Complete auth_logger.py with functions to log events to blockchain, calculate
+hashes, and query audit trail.
+
+3. IoMT Device Completion
+Finish Alpine Linux IoMT VMs or switch to lightweight Debian/Ubuntu for patient
+monitor, infusion pump, and access control emulators.
+
+4. EHR Server Deployment
+Set up Ubuntu Server as EHR database in DATA VLAN with PostgreSQL and
+synthetic patient data from Synthea.
+
+5. Troubleshoot pfSense Web GUI
+Resolve web interface connectivity issues or perform clean reinstall with new
+virtual network topology to restore GUI access.
