@@ -94,8 +94,256 @@
             font-weight: bold;
         }
 
-        
+        .vlan-item {
+            background: #f9fafb;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 4px solid #667eea
+        }
 
+        .vlan-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .vlan-details {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .event-itme {
+            background: #f9fafb;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        .event-success {
+            border-left: 4px solid #10b981;
+        }
+
+        .event-failed {
+            border-left: #ef4444;
+        }
+
+        .event-time {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .blockchain-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 5px 0;
+        }
+
+        .big-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .attack-alert {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .attack-contained {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+        }
+
+        .refresh-time {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            padding: 20px
+        }
     </style>
 </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zero Trust Healthcare Network Dashboard</h1>
+            <p class="subtitle">Real time monitoring - Blockchain audit trail - Attack containment metrics</p>
+        </header>
+
+        <!-- Security Metrics -->
+        <div class="grid">
+            <div class="card">
+                <h2>Security Metrics</h2>
+                <div id="security-metrics" class="loading">Loading...</div>
+            </div>
+
+            <div class="card">
+                <h2>Blockchain Status</h2>
+                <div id="blockchain-stats" class="loading">Loading...</div>
+            </div>
+
+            <div class="card">
+                <h2>Backup Verification</h2>
+                <div id="backup-status" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Network Status -->
+        <div class="grid">
+            <div class="card">
+                <h2>Network VLANs</h2>
+                <div id="network-status" class="loading">Loading...</div>
+            </div>
+
+            <div class="card">
+                <h2>Authentication Events</h2>
+                <div id="auth-events" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <div class="refresh-time">
+            Last updated: <span id="last-update">--</span> - Auto refresh every 5 seconds
+        </div>   
+    </div>
+
+    <script>
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('last-update').textContent = now.toLocaleTimeString();
+        }
+
+        // Fetch and display security metrics
+        async function loadSecurityMetrics() {
+            try {
+                const response = await fetch('/api/security-metrics');
+                const data = await response.json();
+
+                const metrics = data.metrics;
+                let html = `
+                    <div class="metric">
+                        <span class="metric-label">Containment Effectiveness</span>
+                        <span class="metric-value">${metrics.containment_effectiveness}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${metrics.containment_effeciveness}%">
+                            ${metrics.containment_effectiveness}% 
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Lateral Movement Blocked</span>
+                        <span class="metric-value status-active">${metrics.lateral_movement_bloacked}%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Detection Time</span>
+                        <span class="metric-value">${metrics.detection_time_seconds}%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">System Protected</span>
+                        <span class="metric-value">${metrics.systems_protected}/${metrics.systems_protected + metrics.systems_compromised}</span>
+                    </div>
+            `;
+            
+            if (data.recent_attacks && data.recent_attacks.length > 0) {
+                html += `<div class="attack-alert attack-contained" style="margin-top: 15px;">
+                    <strong>Recent Attack:</strong> ${data.recent_attacks[0].type}<br>
+                    <small>Status: ${data.recent_attacks[0].status} ${data.recent_attacks[0].affected_vlan} VLAN</small>
+                </div>`;
+            }
+
+            document.getElementById('security-metrics').innerHTML = html;
+        } catch (error) {
+            document.getElementById('security-metrics').innerHTML = '<p style="color: #ef4444;">Error loading metrics</p>';
+        }
+    }
+    // Fetch and display blockhain stats
+    async function loadBlockchainStats() {
+        try {
+            const response = await fetch('/api/blocchain-stats');
+            const data = await response.json();
+
+            const html = `
+                <div class="blockchain-badge">Solana Devnet</div>
+                <div class="blockchain-badge">${data.status === 'simulated' ? 'Simulation Mode' : 'Live'}</div>
+                <div class="big-number">${data.total_transactions}</div>
+                <p style="text-align: center; color: #666; margin-top: -15px;">Total Transactions</p>
+                <div class="metric">
+                    <span class="metric-label">Audit Events Logged</span>
+                    <span class="metric-value">${data.audit_events_logged}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Backup Hashes Stored</span>
+                    <span class="metric-value">$data.backup_hashes_stored}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Immutability</span>
+                    <span class="metric-value status-active">${data.immutability}</span>
+                </div>
+            `;
+
+            document.getElementById('blockchain-stats').innerHTML = html;
+        } catch (error) {
+            document.getElementById('blockchain-stats').innerHTML = '<p style="color: #ef4444;">Error loading blockchain data</p>';
+        }
+    }
+
+    // Fetch and display backup status
+    async function loadBlockchainStatus() {
+        try {
+            const repsone = await fetch('/api/backup-status');
+            const data = await response.json();
+
+            let html = `
+                <div class="metric">
+                    <span class="metric-label">Total Backups</span>
+                    <span class="metric-value">${data.total_backups}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Verified</span>
+                    <span class="metric-value">${data.total_backups}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Last Backup</span>
+                    <span
+        }
+        
+    }
+    </script>
+</body>
 </html>
