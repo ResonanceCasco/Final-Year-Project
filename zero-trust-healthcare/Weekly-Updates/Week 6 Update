@@ -1,0 +1,59 @@
+Activities carried out this week
+
+1. Dashboard Frontend Implementation - In Progress
+Developing the index.html template with CSS styling, JavaScript for API
+data fetching, auto refresh functionality (5 second intervals), and visual
+components for VLANs, metrics, and audit events.
+
+2. Python Blockchain Scripts Continued - Complete
+Additionally to auth_logger.py two more Pyhton scripts were
+programmed. backup_verifier.py calculates file hashes, stores them on
+the blockchain, and later verifies backup integrity by comparing current
+hashes against blockchain stored values. audit_query.py provides
+querying capabilities for the audit trail, filtering events by user,
+timeframe, risk score, and failed login patterns.
+
+3. Flask Dashboard Development - Complete
+Created Flask web application (app.py) with API endpoints for network
+status, authentication events, backup verification, security metrics, and
+blockchain statistics. Designed responsive HTML interface with real
+time data visualisation.
+
+4. Implementation Chapter Documentation - Complete
+Authored comprehensive Implementation chapter (Chapter 5) for
+Technical Report documenting development process, code
+management practices, challenges encountered, and lessons learned
+across all project phases.
+
+5. Project Documentation Review - Complete
+Reviewed and consolidated project progress across all weeks, ensuring
+accurate representation of both successes and ongoing challenges for
+academic reporting.
+
+6. Devnet SOL Token Acquisition Attempts - Delayed
+Attempted to obtain devnet SOL tokens from multiple faucets
+(SolFaucet, QuickNode, Solana.com, curl API) for blockchain
+transaction testing. All attempts failed due to rate limiting and service
+availability issues.
+
+Plans for the next period
+
+1. Resolve pfSense Web GUI Access
+Priority troubleshooting of web interface connectivity issue or perform clean
+reinstall to restore GUI functionality for advanced configuration.
+
+2. Complete Dashboard Integration
+Test Flask dashboard with live data, integrate with actual blockchain scripts, and
+deploy for real-time network monitoring demonstration.
+
+3. Alternative Blockchain Testing
+Set up local Solana test validator as alternative to devnet faucets, enabling live
+transaction testing without external dependencies.
+
+4. EHR Server Deployment
+Deploy Ubuntu Server with PostgreSQL database and load Synthea generated
+synthetic patient data in DATA VLAN.
+
+5. Attack Simulation Testing
+Begin ransomware containment testing using Atomic Red Team to measure Zero
+Trust effectiveness and populate dashboard with real attack metrics
