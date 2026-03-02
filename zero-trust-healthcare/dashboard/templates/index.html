@@ -13,7 +13,7 @@
 
         body {
             font-family:'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, ##667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             padding: 20px;
         }
@@ -295,7 +295,7 @@
     // Fetch and display blockhain stats
     async function loadBlockchainStats() {
         try {
-            const response = await fetch('/api/blocchain-stats');
+            const response = await fetch('/api/blockchain-stats');
             const data = await response.json();
 
             const html = `
@@ -324,7 +324,7 @@
     }
 
     // Fetch and display backup status
-    async function loadBlockchainStatus() {
+    async function loadBackupStatus() {
         try {
             const repsone = await fetch('/api/backup-status');
             const data = await response.json();
@@ -340,10 +340,96 @@
                 </div>
                 <div class="metric">
                     <span class="metric-label">Last Backup</span>
-                    <span
-        }
-        
+                    <span class="metric-value">${data.last_backup ? new Date(data.last_backup).toLocaleString() : 'N/A'}</span>
+                </div>
+            `;
+            document.getElementById('backup-status').innerHTML = html;
+        } catch (error) {
+            document.getElementById('backup-status').innerHTML = '<p style="color: #ef4444;">Error loading backup data</p>';
+        } 
     }
+
+    // Fetch and display network status
+    async function loadNetworkStatus() {
+        try{
+            const response = await fetch('/api/network-status');
+            const data = await response.json();
+
+            let html = '';
+            data.vlans.forEach(vlan => {
+                html += `
+                    <div class="vlan-item">
+                        <div class="vlan-name">${vlan.name} VLAN</div>
+                        <div class="vlan-details">
+                            ${vlan.subnet} Gateway: ${vlan.gateway}<br>
+                            Status: <span class="status-active">${vlan.status}</span> Devices: ${vlan.devices}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;"
+                    <div class="metric">
+                        <span class="metric-label">Active Firewall Rules</span>
+                        <span class="metric-value">${data.firewall_rules.active}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Blocked Attempts Today</span>
+                        <span class="metric-value status-blocked">${data.firewall_rules_blocked_today}</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('network-status').innerHTML = html;
+        } catch (error) {
+            document.getElementById('network-status').innerHTML = '<p style="color: #ef4444;">Error loading network data</p>';
+        }    
+    }
+
+    // Fetch and display authentication events
+    async function loadAuthEvents() {
+        try{
+            const response = await fetch('/api/auth-events');
+            const events = await response.json();
+
+            if (events.length === 0) {
+                document.getElementById('auth-events').innerHTML = '<p style="color: #666;">No recent events</p>';
+                return;     
+            }
+
+            let html = '';
+            events.slice(-5).reverse().forEach(event => {
+                const eventClass = event.result === 'success' ? 'event-success' : 'event-failed';
+                const time = new Date(event.timestamp).toLocaleTimeString();
+                
+                html += `
+                    <div class="event-item ${eventClass}">
+                        <strong>${event.user}</strong> ${event.action} ${event.result}<br>
+                        <span class="event-time">${time} ${event.source_ip} Risk: ${event.risk_score}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('auth-events').innerHTML = html;
+        } catch (error) {
+            document.getElementById('auth-events').innerHTML = '<p style="color: #ef4444;">Error loading events</p>';
+        }
+    }
+
+    // Load all data
+    function loadAllData() {
+        loadSecurityMetrics();
+        loadBlockchainStats();
+        loadBackupStatus();
+        loadNetworkStatus();
+        loadAuthEvents();
+        updateTimestamp();
+    }
+
+    // Initial load
+    loadAllData();
+
+    // Auto-refresh every 5 seconds
+    setInterval(loadAllData, 5000);
     </script>
 </body>
 </html>

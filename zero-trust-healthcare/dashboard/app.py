@@ -12,7 +12,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Configuration
-BLOCKCHAIN_SCRIPTS_DIR = "home/jaboris/final-year-project/zero-trust-healthcare/blockchain-scripts"
+BLOCKCHAIN_SCRIPTS_DIR = "/home/jaboris/final-year-project/zero-trust-healthcare/blockchain-scripts"
 LOG_DIR = os.path.join(BLOCKCHAIN_SCRIPTS_DIR, "logs")
 BACKUP_DIR = os.path.join(BLOCKCHAIN_SCRIPTS_DIR, "backups")
 
@@ -96,7 +96,7 @@ def backup_status():
         with open(records_file, 'r') as f:
             records = json.load(f)
 
-        return jonify({
+        return jsonify({
             "total_backups": len(records),
             "verified": len(records),
             "last_backup": max([r["timestamp"] for r in records.values()]) if records else None,
@@ -109,8 +109,8 @@ def backup_status():
             "last_backup": None
         })
 
-@app.route('/api/securiy-metrics')
-def security_metric():
+@app.route('/api/security-metrics')
+def security_metrics():
     """Get security and attack metrics:"""
     return jsonify({
         "timestamp": datetime.now().isoformat(),
@@ -118,7 +118,7 @@ def security_metric():
             "containment_effectiveness": 91.7,
             "lateral_movement_blocked": 100,
             "detection_time_seconds": 45,
-            "systems_compromise": 1,
+            "systems_compromised": 1,
             "systems_protected": 11,
             "backup_integrity": 100
         },
@@ -132,24 +132,24 @@ def security_metric():
         ]
     })
 
-    @app.route('/api/blockchain-stats')
-    def blockchain_stats():
-        """Get blockchain audit statistics"""
-        return jsonify({
-            "wallet_address": "5ke13HRGtHi5TMbqC8JYYxympEmAwDJSpwEtePgAYxWG",
-            "network": "devnet",
-            "status": "simulated",
-            "total_transactions": 247,
-            "audit_events_logged": 234,
-            "backup_hashes_stored": 13,
-            "immutability": "100%"
-        })
+@app.route('/api/blockchain-stats')
+def blockchain_stats():
+    """Get blockchain audit statistics"""
+    return jsonify({
+        "wallet_address": "5ke13HRGtHi5TMbqC8JYYxympEmAwDJSpwEtePgAYxWG",
+        "network": "devnet",
+        "status": "simulated",
+        "total_transactions": 247,
+        "audit_events_logged": 234,
+        "backup_hashes_stored": 13,
+        "immutability": "100%"
+    })
 
-    if __name__ == '__main__':
-        print("="*60)
-        print("Zero Trust Healthcare Network Dashboard")
-        print("="*60)
-        print(f"\nStarting server at http://127.0.0.1:5000")
-        print("Press Ctrl+C to stop\n")
+if __name__ == '__main__':
+    print("="*60)
+    print("Zero Trust Healthcare Network Dashboard")
+    print("="*60)
+    print(f"\nStarting server at http://127.0.0.1:5000")
+    print("Press Ctrl+C to stop\n")
 
-        app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -132,7 +132,7 @@ class BackupVerifier:
 
     def _save_local_record(self, record):
         """Save backup record locally (temporary until blockchain works)"""
-        records_file = os.path.join(BACKUP_DIR, "backup_record.json")
+        records_file = os.path.join(BACKUP_DIR, "backup_records.json")
 
         # Load existing records
         if os.path.exists(records_file):
