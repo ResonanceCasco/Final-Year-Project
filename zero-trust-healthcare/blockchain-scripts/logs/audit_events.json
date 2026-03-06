@@ -1,0 +1,58 @@
+[
+  {
+    "user": "ssharkey",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-02-23T08:15:00",
+    "source_ip": "192.168.10.107",
+    "risk_score": 10
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-02-23T08:16:30",
+    "source_ip": "192.168.10.108",
+    "risk_score": 45
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-02-23T08:17:15",
+    "source_ip": "192.168.10.108",
+    "risk_score": 65
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-02-23T08:18:00",
+    "source_ip": "192.168.10.108",
+    "risk_score": 20
+  },
+  {
+    "user": "mratched",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-02-23T08:20:00",
+    "source_ip": "192.168.10.109",
+    "risk_score": 5
+  },
+  {
+    "user": "wbreen",
+    "action": "admin_access",
+    "result": "success",
+    "timestamp": "2026-02-23T14:30:00",
+    "source_ip": "192.168.10.100",
+    "risk_score": 15
+  },
+  {
+    "user": "unknown",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-02-23T23:45:00",
+    "source_ip": "192.168.10.200",
+    "risk_score": 95
+  }
+]

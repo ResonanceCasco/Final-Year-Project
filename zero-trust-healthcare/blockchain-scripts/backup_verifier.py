@@ -13,8 +13,8 @@ import os
 
 # Configuration
 SOLANA_DEVNET_URL = "https://api.devnet.solana.com"
-WALLET_PATH = "/home/jaboris/final-year-project/zero-trust-healthcare/blockchain-scripts/keys/audit-wallet.json"
-BACKUP_DIR = "/home/jaboris/final-year-project/zero-trust-healthcare/blockchain-scripts/backups"
+WALLET_PATH = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/keys/audit-wallet.json"
+BACKUP_DIR = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/backups/"
 
 class BackupVerifier:
     def __init__(self):
@@ -134,21 +134,27 @@ class BackupVerifier:
         """Save backup record locally (temporary until blockchain works)"""
         records_file = os.path.join(BACKUP_DIR, "backup_records.json")
 
+        print(f"DEBUG: Attempting to save to: {records_file}")  # Added this for debug
+
         # Load existing records
         if os.path.exists(records_file):
             with open(records_file, 'r') as f:
                 records = json.load(f)
+            print(f"DEBUG: Loaded {len(records)} existing records") # added this for debug
         else:
             records = {}
+            print(f"DEBUG: No existing file, creating new") # added this for debug
 
         # Add new record
-        record[record["backup_name"]] = record
+        records[record["backup_name"]] = record # bug found changed record[] to records[]
+        print(f"DEBUG: Total records now: {len(records)}") # added this for debug
 
         # Save
         os.makedirs(BACKUP_DIR, exist_ok=True)
         with open (records_file, 'w') as f:
             json.dump(records, f, indent=2)
 
+        print(f"DEBUG: File written successfully")  # added this for debug
         print(f" Record saved locally")
 
     def _get_local_record(self, backup_name):

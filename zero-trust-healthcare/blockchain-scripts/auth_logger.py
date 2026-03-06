@@ -15,7 +15,7 @@ import os
 
 # Configuration
 SOLANA_DEVNET_URL = "https://api.devnet.solana.com"
-WALLET_PATH = "/home/jaboris/final-year-project/zero-trust-healthcare/blockchain-scripts/keys/audit-wallet.json"
+WALLET_PATH = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/keys/audit-wallet.json"
 
 class AuthLogger:
     def __init__(self):

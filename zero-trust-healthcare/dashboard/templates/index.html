@@ -326,8 +326,8 @@
     // Fetch and display backup status
     async function loadBackupStatus() {
         try {
-            const repsone = await fetch('/api/backup-status');
-            const data = await response.json();
+            const response = await fetch('/api/backup-status'); // Bug: typo repsone instead of response
+            const data = await response.json(); // Then it used response causing an error
 
             let html = `
                 <div class="metric">
@@ -376,7 +376,7 @@
                     </div>
                     <div class="metric">
                         <span class="metric-label">Blocked Attempts Today</span>
-                        <span class="metric-value status-blocked">${data.firewall_rules_blocked_today}</span>
+                        <span class="metric-value status-blocked">${data.firewall_rules.blocked_today}</span> 
                     </div>
                 </div>
             `;

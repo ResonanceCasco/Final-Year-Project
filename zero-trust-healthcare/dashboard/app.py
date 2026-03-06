@@ -12,7 +12,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Configuration
-BLOCKCHAIN_SCRIPTS_DIR = "/home/jaboris/final-year-project/zero-trust-healthcare/blockchain-scripts"
+BLOCKCHAIN_SCRIPTS_DIR = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/"
 LOG_DIR = os.path.join(BLOCKCHAIN_SCRIPTS_DIR, "logs")
 BACKUP_DIR = os.path.join(BLOCKCHAIN_SCRIPTS_DIR, "backups")
 
