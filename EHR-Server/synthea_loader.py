@@ -56,7 +56,7 @@ def parse_patient(resource):
                 ssn = identifier.get('value', '').replace('-', '')
 
         # Address
-        address_data = resource.get('identifier', []):
+        address_data = resource.get('address', [{}])[0]
         address = ', '.join(address_data.get('line', []))
         city = address_data.get('city', '')
         state = address_data.get('state', '')
@@ -113,7 +113,7 @@ def parse_encounter(resource, patient_id):
 
         # Provider
         provider_name = None
-        if resource.get('participant')
+        if resource.get('participant'):
             provider_ref = resource['participant'][0].get('individual', {}).get('display')
             provider_name = provider_ref
 
@@ -162,7 +162,7 @@ def parse_condition(resource, patient_id):
         return {
             'patient_id': patient_id,
             'encounter_id': encounter_id,
-            'onset_date' onset_date,
+            'onset_date': onset_date,
             'resolved_date': resolved_date,
             'condition_code': condtion_code,
             'condition_description': condition_desc,
@@ -415,7 +415,7 @@ def load_synthea_data():
     }
 
     try:
-        for json file in json files:
+        for json_file in json_files:
             filepath = os.path.join(SYNTHEA_OUTPUT_DIR, json_file)
             data = process_fhir_bundle(filepath)
 
@@ -437,7 +437,7 @@ def load_synthea_data():
         # Commit all changes
         conn.commit()
 
-        print("\N" + "="*60)
+        print("\n" + "="*60)
         print("Data Load Complete!")
         print("="*60)
         print(f"Total Patients:     {total_stats['patients']}")
@@ -456,5 +456,5 @@ def load_synthea_data():
         cursor.close()
         conn.close()
 
-if__name__ == "__main__":
+if __name__ == "__main__":
     load_synthea_data()  
