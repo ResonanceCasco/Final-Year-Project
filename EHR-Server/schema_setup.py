@@ -188,4 +188,63 @@ def create_access_log_table(cursor):
 
 def create_indexes(cursor):
     """Create indexes for better query peformance"""
-    indexes = []
+    indexes = [
+        "CREATE INDEX IF NOT EXISTS idx_patient_name ON patients(last_name, first_name);",
+        "CREATE INDEX IF NOT EXISTS idx_patient_dob ON patients(date_of_birth);",
+        "CREATE INDEX IF NOT EXISTS idx_encounter_patient ON encounters(patient_id);",
+        "CREATE INDEX IF NOT EXISTS idx_encounter_date ON encounters(encounters_date);",
+        "CREATE INDEX IF NOT EXISTS idx_condition_patient ON conditions(patient_id);",
+        "CREATE INDEX IF NOT EXISTS idx_medication_patient ON medications(patient_id);",
+        "CREATE INDEX IF NOT EXISTS idx_observation_patient ON observations(patient_id);",
+        "CREATE INDEX IF NOT EXISTS idx_access_log_user ON access_logs(user_id);",
+        "CREATE INDEX IF NOT EXISTS idx_access_log_time ON access_logs(access_time);"
+    ]
+
+    for index_query in indexes:
+        cursor.execute(index_query)
+
+    print("Created database indexes")
+
+def setup_database():
+    """Main setup function"""
+    print("="*60)
+    print("EHR Database Schema Setup")
+    print("="*60)
+    print()
+
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Create all tables
+        create_patients_table(cursor)
+        create_encounters_table(curosor)
+        create_conditions_table(cursor)
+        create_medications_table(cursor)
+        create_observations_table(cursor)
+        create_allergies_table(cursor)
+        create_procedures_table(cursor)
+        create_access_log_table(cursor)
+
+        # Create indexes
+        create_indexes(cursor)
+
+        # Commit chnages
+        conn.commit()
+        print()
+        print("="*60)
+        print("Database schema setup complete!")
+        print("="*60)
+
+    except Exception as e:
+        conn.rollback()
+        print(f"Error during setup: {e}")
+        sys.exit(1)
+
+    finally:
+        cursor.close()
+        conn.close()
+
+if __name__ == "__main__":
+    setup_database()
+
