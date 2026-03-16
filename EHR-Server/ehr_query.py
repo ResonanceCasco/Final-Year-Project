@@ -6,16 +6,17 @@ Simulates clinical staff access with audit logging
 """
 
 import psycopg2
-form psycopg2.extras import RealDictCursor
-import sys from datetime import datetime
+from psycopg2.extras import RealDictCursor
+import sys 
+from datetime import datetime
 import json
 
 # Database configuration
 DB_CONFIG = {
     'dbname': 'healthcare_ehr',
     'user': 'ehr_admin',
-    'password': 'SecurePass2024!'
-    'host': 'localhost'
+    'password': 'SecurePass2024!',
+    'host': 'localhost',
     'port': 5432
 }
 
@@ -51,7 +52,7 @@ class EHRQuery:
                 access_type,
                 self.source_ip,
                 action,
-                success
+                success,
                 datetime.now()
             ))
             self.conn.commit()
@@ -444,16 +445,16 @@ def interactive_mode():
             first_name = input("First name (or Enter to skip): ").strip() or None
             ehr.search_patients(last_name=last_name, first_name=first_name)
 
-        elif choise == '2';
+        elif choice == '2':
             patient_id = input("Enter patient ID: ").strip()
             if patient_id:
                 ehr.get_complete_patient_record(patient_id)
 
-        elif choice == '3';
+        elif choice == '3':
             patient_id = input("Patient ID (or Enter for all): ").strip() or None
             ehr.get_access_audit_log(patient_id=patient_id)
 
-        elif choice == '4';
+        elif choice == '4':
             breakpoint
 
         else:
