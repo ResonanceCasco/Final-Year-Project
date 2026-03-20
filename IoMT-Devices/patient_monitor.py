@@ -8,8 +8,7 @@ import time
 import random
 import requests
 import json
-import datetime
-import datetime import datetime
+from datetime import datetime
 import sys
 
 # Device Configurations
@@ -41,7 +40,7 @@ class PatientMonitor:
             'heart_rate': 75,
             'bp_systolic': 120,
             'bp_diastolic': 80,
-            'temperature': 37.0 # Celsius
+            'temperature': 37.0, # Celsius
             'oxygen_saturation': 98
         }
 
@@ -78,7 +77,7 @@ class PatientMonitor:
         temp = self.baseline['temperature'] + random.uniform(-0.5, 0.5)
 
         # Simulate occasional fever
-        if random,random() < 0.03: # 3% chance
+        if random.random() < 0.03: # 3% chance
             temp = random.uniform(38.0, 39.5)
 
         return round(temp, 1)
@@ -103,7 +102,7 @@ class PatientMonitor:
         vitals = {
             "device_id": self.device_id,
             "patient_id": self.patient_id,
-            "timestamp": datetime.now().isoformat,
+            "timestamp": datetime.now().isoformat(),
             "vitals": {
                 "heart_rate": {
                     "value": hr,
@@ -175,11 +174,17 @@ class PatientMonitor:
 
             # Simulate API call (will fail without actual server, that's expected)
             try:
+                # Simplified headers - just device ID
+                headers = {
+                    "Content-Type": "application/json",
+                    "X-Device-ID": self.device_id
+                }
+
                 response = requests.post(
                     EHR_API_URL,
                     json=vitals,
-                    timeout=5
-                    headers={"X-Device-Certificate": json.dumps(DEVICE_CERT)}
+                    timeout=5,
+                    headers=headers
                 )
 
                 if response.status_code == 200:
@@ -202,7 +207,7 @@ class PatientMonitor:
 
     def _save_local(self, vitals):
         """Save vitals to local file (failback when server unavailable)"""
-        filename = f"witals_log_{self.device_id}.json"
+        filename = f"vitals_log_{self.device_id}.json"
 
         try:
             # Load exisitng data
@@ -217,9 +222,9 @@ class PatientMonitor:
 
             # Save back 
             with open (filename, 'w') as f:
-                json.dump(data, f, indent=2)
+                json.dump(data, f, indent=2, default=str) # Added default=str here
             
-            print(f"   Saved locally to {filename}")
+            print(f"   Saved locally to {filename}") 
 
         except Exception as e:
             print(f"   Local save failed: {e}")
@@ -231,7 +236,7 @@ class PatientMonitor:
         print(f"\n{'='*60}")
         print(f"VITAL SIGNS - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"{'='*60}")
-        print(f"Device: {self.device_id} | Patint: {self.patient_id}")
+        print(f"Device: {self.device_id} | Patient: {self.patient_id}")
         print(f"{'-'*60}")
 
         # Heart Rate
@@ -251,7 +256,7 @@ class PatientMonitor:
 
         # Oxygen Saturation
         spo2 = v['oxygen_saturation']
-        status_icon = "Caution" if spo2['status'] != "normal" esle "Safe"
+        status_icon = "Caution" if spo2['status'] != "normal" else "Safe"
         print(f"{status_icon} SpO2:       {spo2['value']:3d} {spo2['unit']:<4} [{spo2['status']}]")
 
         print(f"{'='*60}\n")
@@ -276,7 +281,7 @@ class PatientMonitor:
                 vitals = self.collect_vitals()
 
                 # Display
-                self.display_vitals(vitals):
+                self.display_vitals(vitals)
 
                 # Transmit
                 if self.transmit_vitals(vitals):
@@ -298,10 +303,10 @@ class PatientMonitor:
             elapsed = time.time() - start_time
 
             print(f"\n{'='*60}")
-            print(f"Monitoring Session SUmmary")
+            print(f"Monitoring Session Summary")
             print(f"{'='*60}")
             print(f"Total Runtime: {elapsed:.0f} seconds")
-            print(f"Transmissions: {tranmission_count}")
+            print(f"Transmissions: {transmission_count}")
             print(f"{'=*60'}\n")
 
 if __name__ == "__main__":
@@ -332,7 +337,7 @@ if __name__ == "__main__":
     )
 
     monitor.run(duration=duration)
-    
+
 
                 
 

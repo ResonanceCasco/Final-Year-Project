@@ -1,0 +1,58 @@
+[
+  {
+    "device_id": "MONITOR-001",
+    "patient_id": "test-patient-001",
+    "timestamp": "2026-03-20T13:06:37.961827",
+    "vitals": {
+      "heart_rate": {
+        "value": 85,
+        "unit": "bpm",
+        "status": "normal"
+      },
+      "blood_pressure": {
+        "systolic": 100,
+        "diastolic": 80,
+        "unit": "mmHg",
+        "status": "normal"
+      },
+      "temperature": {
+        "value": 36.9,
+        "unit": "\u00b0C",
+        "status": "normal"
+      },
+      "oxygen_saturation": {
+        "value": 97,
+        "unit": "%",
+        "status": "normal"
+      }
+    }
+  },
+  {
+    "device_id": "MONITOR-001",
+    "patient_id": "test-patient-001",
+    "timestamp": "2026-03-20T13:07:41.045607",
+    "vitals": {
+      "heart_rate": {
+        "value": 78,
+        "unit": "bpm",
+        "status": "normal"
+      },
+      "blood_pressure": {
+        "systolic": 100,
+        "diastolic": 74,
+        "unit": "mmHg",
+        "status": "normal"
+      },
+      "temperature": {
+        "value": 37.1,
+        "unit": "\u00b0C",
+        "status": "normal"
+      },
+      "oxygen_saturation": {
+        "value": 96,
+        "unit": "%",
+        "status": "normal"
+      }
+    }
+  }
+]
