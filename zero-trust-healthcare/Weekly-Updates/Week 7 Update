@@ -1,0 +1,51 @@
+Activities carried out this week
+
+1. EHR Database Schema Design - In Progress
+Developing schema_setup.py script creating 7 main PostgreSQL tables
+(patients, encounters, conditions, medications, observations, allergies,
+procedures) plus access_logs audit table with indexes and foreign key
+relationships.
+
+2. Flask Dashboard Implementation - Completed
+Created Flask web application (app.py) with 5 API endpoints for network
+status, authentication events, backup verification, security metrics, and
+blockchain statistics. Built responsive HTML/CSS/JavaScript frontend
+with real-time auto-refresh functionality.
+
+3. Dashboard Debugging & Bug Fixes - Completed
+Fixed multiple JavaScript typos (repsone to response, jonify to jsonify),
+corrected Python bug in backup_verifier.py, resolved project directory
+path inconsistencies, and fixed data access paths in frontend code.
+
+4. Project Directory Consolidation - Completed
+Unified all Python scripts to use consistent GitHub project directory
+paths. Moved Solana wallet and ensured auth_logger.py,
+backup_verifier.py, audit_query.py, and app.py all reference same base
+directories.
+
+5. No items delayed
+
+Plans for the next period
+1. Synthea Data Loader Script
+Create Python script to parse Synthea-generated FHIR JSON patient data and
+insert into PostgreSQL EHR database tables with proper data mapping and error
+handling.
+
+2. EHR Query Interface Script
+Develop Python script for retrieving patient records, simulating clinical staff
+database access with proper authentication logging and blockchain audit
+integration.
+
+3. Ubuntu Server EHR Deployment
+Deploy Ubuntu Server VM in DATA VLAN (192.168.40.x), install PostgreSQL, run
+schema_setup.py to create database structure, and load synthetic patient data.
+
+4. IoMT Device Simulation Scripts
+Create Python scripts to simulate medical device behavior (patient monitors,
+infusion pumps) generating fake vitals data and transmitting to EHR server via
+API.
+
+5. Attack Simulation Testing
+Begin ransomware containment testing using Atomic Red Team to measure Zero
+Trust effectiveness, collect metrics (detection time, containment %), and populate
+dashboard with real attack data.

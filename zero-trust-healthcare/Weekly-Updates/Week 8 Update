@@ -1,0 +1,64 @@
+Activities carried out this week
+
+1. EHR Query Interface Script - In Progress
+Developed ehr_query.py providing patient search, complete medical
+record retrieval, access audit logging, and interactive query mode.
+Includes functions for demographics, conditions, medications, vitals,
+and encounter history with automatic audit trail generation.
+
+2. pfSense Web GUI Resolution - Completed
+Successfully restored pfSense web interface access by reverting NIC
+configurations to original virtual network settings. Web GUI now
+accessible for advanced firewall configuration and package
+management.
+
+3. Synthea Patient Data Generation - Completed
+Installed Synthea synthetic data generator (Java based), generated 10
+synthetic patient records from Massachusetts with complete FHIR
+compliant medical histories including demographics, encounters,
+conditions, medications, and observations.
+
+4. EHR Database Schema Script - Completed
+Developed schema_setup.py creating 7 main PostgreSQL tables
+(patients, encounters, conditions, medications, observations, allergies,
+procedures) plus access_logs audit table with foreign key relationships
+and performance indexes.
+
+5. Synthea Data Loader Script - Completed
+Created synthea_loader.py to parse FHIR JSON bundles and bulk
+insert data into PostgreSQL using psycopg2. Script handles patients,
+encounters, conditions, medications, and observations with error
+handling and batch operations.
+
+6. Testing & Evaluation Chapter - Completed
+Authored comprehensive Testing & Evaluation chapter (Section 6)
+documenting testing methodology, functional testing results for
+authentication, firewall, blockchain, and backup systems, plus
+evaluation of achieved success criteria and pending full scale testing.
+
+7. No delayed items
+
+Plans for the next period
+
+1. Complete EHR Query Interface
+Finalise ehr_query.py script with remaining helper functions and test all query
+methods to ensure proper database interaction and audit logging functionality.
+
+2. Ubuntu Server Deployment
+Deploy Ubuntu Server VM in DATA VLAN with PostgreSQL installation, run
+schema_setup.py to create database structure, and execute synthea_loader.py to
+populate with 10 synthetic patients.
+
+3. IoMT Device Simulation Scripts
+Develop Python scripts simulating medical device behavior (patient vitals
+monitoring, data transmission to EHR API) as alternative to failed Alpine Linux
+deployment.
+
+4. Attack Simulation Preparation
+Install Atomic Red Team and Metasploit on Kali Linux VM, configure attack
+scenarios targeting Clinical VLAN, and prepare metrics collection for ransomware
+containment testing.
+
+5. Local Solana Validator Setup
+Investigate setting up local Solana test validator to enable live blockchain
+transaction testing without dependency on devnet faucets.
