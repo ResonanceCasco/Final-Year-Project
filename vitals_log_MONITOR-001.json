@@ -82,5 +82,61 @@
         "status": "normal"
       }
     }
+  },
+  {
+    "device_id": "MONITOR-001",
+    "patient_id": "test-patient-001",
+    "timestamp": "2026-03-20T13:10:10.422099",
+    "vitals": {
+      "heart_rate": {
+        "value": 103,
+        "unit": "bpm",
+        "status": "tachycardia"
+      },
+      "blood_pressure": {
+        "systolic": 100,
+        "diastolic": 75,
+        "unit": "mmHg",
+        "status": "normal"
+      },
+      "temperature": {
+        "value": 37.0,
+        "unit": "\u00b0C",
+        "status": "normal"
+      },
+      "oxygen_saturation": {
+        "value": 99,
+        "unit": "%",
+        "status": "normal"
+      }
+    }
+  },
+  {
+    "device_id": "MONITOR-001",
+    "patient_id": "test-patient-001",
+    "timestamp": "2026-03-20T13:11:13.526372",
+    "vitals": {
+      "heart_rate": {
+        "value": 85,
+        "unit": "bpm",
+        "status": "normal"
+      },
+      "blood_pressure": {
+        "systolic": 100,
+        "diastolic": 70,
+        "unit": "mmHg",
+        "status": "normal"
+      },
+      "temperature": {
+        "value": 37.3,
+        "unit": "\u00b0C",
+        "status": "normal"
+      },
+      "oxygen_saturation": {
+        "value": 91,
+        "unit": "%",
+        "status": "normal"
+      }
+    }
   }
 ]
