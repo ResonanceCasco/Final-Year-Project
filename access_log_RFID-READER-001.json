@@ -1,0 +1,62 @@
+[
+  {
+    "device_id": "RFID-READER-001",
+    "location": "Intensive Care Unit - Main Door",
+    "timetsamp": "2026-03-27T10:56:32.159651",
+    "badge_id": "BADGE-005",
+    "name": "Barney Calhoun",
+    "role": "Janitor",
+    "clearance_level": 1,
+    "authorised": false,
+    "action": "DENY",
+    "reason": "Insufficient clearance (has 1, needs 2)"
+  },
+  {
+    "device_id": "RFID-READER-001",
+    "location": "Intensive Care Unit - Main Door",
+    "timetsamp": "2026-03-27T10:56:38.226451",
+    "badge_id": "BADGE-005",
+    "name": "Barney Calhoun",
+    "role": "Janitor",
+    "clearance_level": 1,
+    "authorised": false,
+    "action": "DENY",
+    "reason": "Insufficient clearance (has 1, needs 2)"
+  },
+  {
+    "device_id": "RFID-READER-001",
+    "location": "Intensive Care Unit - Main Door",
+    "timetsamp": "2026-03-27T10:56:44.305718",
+    "badge_id": "BADGE-005",
+    "name": "Barney Calhoun",
+    "role": "Janitor",
+    "clearance_level": 1,
+    "authorised": false,
+    "action": "DENY",
+    "reason": "Insufficient clearance (has 1, needs 2)"
+  },
+  {
+    "device_id": "RFID-READER-001",
+    "location": "Intensive Care Unit - Main Door",
+    "timetsamp": "2026-03-27T10:56:50.385582",
+    "badge_id": "BADGE-003",
+    "name": "Mildred Ratched",
+    "role": "Nurse",
+    "clearance_level": 2,
+    "authorised": true,
+    "action": "GRANT",
+    "reason": "Access granted"
+  },
+  {
+    "device_id": "RFID-READER-001",
+    "location": "Intensive Care Unit - Main Door",
+    "timetsamp": "2026-03-27T10:56:56.465966",
+    "badge_id": "BADGE-004",
+    "name": "Wallace Breen",
+    "role": "IT Admin",
+    "clearance_level": 4,
+    "authorised": true,
+    "action": "GRANT",
+    "reason": "Access granted"
+  }
+]
