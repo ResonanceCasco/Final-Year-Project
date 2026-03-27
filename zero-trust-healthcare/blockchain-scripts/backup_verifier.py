@@ -12,7 +12,7 @@ from datetime import datetime
 import os
 
 # Configuration
-SOLANA_DEVNET_URL = "https://api.devnet.solana.com"
+SOLANA_DEVNET_URL = "https://localhost:8899"
 WALLET_PATH = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/keys/audit-wallet.json"
 BACKUP_DIR = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/backups/"
 

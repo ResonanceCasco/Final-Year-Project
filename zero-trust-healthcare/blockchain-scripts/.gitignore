@@ -1,0 +1,5 @@
+# Solana test validator files
+test-ledger/
+faucet-keypair.json
+validator.log
+*.log
