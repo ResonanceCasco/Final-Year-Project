@@ -1,0 +1,53 @@
+Activities carried out this week:
+
+1. Infusion Pump Simulator - In Progress
+Creating a Python script simulating medication infusion pump IoMT
+device sending dosage data, flow rates, and medication administration
+events with safety alerts for dosage limits.
+
+2. Patient Monitor IoMT Simulator - Complete
+Developed patient_monitor.py simulating vital signs monitoring device.
+Generates realistic heart rate, blood pressure, temperature, and oxygen
+saturation with normal/abnormal status assessment. Saves data locally
+as JSON with 60-second transmission intervals.
+
+3. IoMT Simulator Debugging - Complete
+Fixed JSON serialization error caused by missing parentheses in
+datetime.isoformat() call and typo in transmission_count variable.
+Resolved by adding default=str to json.dump() and correcting function
+calls.
+
+4 GitHub Repository Maintenance - Complete
+Resolved GitHub push blocking issue caused by synthea-with-
+dependencies.jar (187.89 MB) exceeding 100MB file size limit. Purged
+file from Git history using git filter-branch/BFG Repo-Cleaner to remove
+large JAR file from all commits.
+
+5. No delayed items
+
+Plans for the next period:
+
+1. Infusion Pump Simulator
+Create a Python script simulating medication infusion pump IoMT device sending
+dosage data, flow rates, and medication administration events with safety alerts
+for dosage limits.
+
+2. Access Control Simulator
+Develop an RFID badge reader simulation script for physical security integration,
+logging entry/exit events and access attempts to blockchain audit trail.
+
+3. Ubuntu Server EHR Deployment
+Deploy the Ubuntu Server VM in DATA VLAN, install PostgreSQL, execute
+schema_setup.py to create database structure, and run synthea_loader.py to
+populate with synthetic patient data.
+
+4. IoMT Device Integration Testing
+Test all 3 IoMT simulators sending data concurrently, verify VLAN isolation
+prevents device to device communication, and validate data transmission to EHR
+server API endpoints.
+
+5. Attack Simulation Preparation
+Install and configure Atomic Red Team on Kali Linux VM, prepare LYNX
+ransomware simulation scenarios targeting Clinical VLAN, and set up metrics
+collection scripts for containment effectiveness measurement.
+
