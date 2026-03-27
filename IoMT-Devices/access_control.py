@@ -77,7 +77,7 @@ class AccessControl:
         print(f"  Access Control Reader initialised")
         print(f"  Device ID: {self.device_id}")
         print(f"  Location: {self.location}")
-        print(f"  Requird Clearance: Level {REQUIRED_CLEARANCE}")
+        print(f"  Required Clearance: Level {REQUIRED_CLEARANCE}")
         print()
 
     def simulate_badge_scan(self):
@@ -144,7 +144,7 @@ class AccessControl:
         """Create access event for logging"""
         event = {
             "device_id": self.device_id,
-            "location": self.loaction,
+            "location": self.location,
             "timetsamp": access_result["timestamp"],
             "badge_id": access_result["badge_id"],
             "name": access_result.get("name"),
