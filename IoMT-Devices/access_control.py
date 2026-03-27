@@ -86,7 +86,7 @@ class AccessControl:
         if random.random() < 0.8:
             badge_id = random.choice(list(AUTHORISED_BADGES.keys()))
         else:
-            badge_id = f"UNKNOWN-{RANDOM.RANDINT(100, 999)}"
+            badge_id = f"UNKNOWN-{random.randint(100, 999)}"
 
         return badge_id
 
@@ -384,9 +384,9 @@ if __name__ == "__main__":
             num_scans = int(sys.argv[2]) if len(sys.argv) > 2 else 10
             interval = int (sys.argv[3]) if len(sys.argv) > 3 else 5
             reader.run_simulation(num_scans=num_scans, interval=interval)
-        else:
-            # Default: simulation with 5 scans
-            reader.run_simulation(num_scans=5, interval=3)
+    else:
+        # Default: simulation with 5 scans
+        reader.run_simulation(num_scans=5, interval=3)
             
 
 
