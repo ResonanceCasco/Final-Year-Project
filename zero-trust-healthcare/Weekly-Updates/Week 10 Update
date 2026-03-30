@@ -1,0 +1,76 @@
+Activities carried out this week:
+
+1. Enable Live Blockchain Transactions - In Progress
+Removing test/simulation mode from blockchain scripts and
+implementing actual transaction submission to local Solana validator.
+Modifying auth_logger.py to submit real transactions with confirmation
+handling and error recovery for failed transactions.
+
+2. Patient Monitor IoMT Simulator - Complete
+Fixed JSON serialization bug by adding .isoformat() to datetime objects.
+
+3. Infusion Pump IoMT Simulator - Complete
+Created infusion_pump.py simulating medication delivery with 4
+medications (morphine, saline, insulin, heparin). Implements flow rate
+control, volume tracking, IV pressure monitoring, and safety alarms for
+high pressure, low volume, and unsafe dosing. Fixed dose rate
+calculation bug for saline (changed from mg/hr to mL/hr).
+
+4. Access Control RFID Simulator - Complete
+Developed access_control.py simulating badge reader for ICU physical
+security. Features 5 authorized personnel with clearance levels 1-4,
+access verification based on clearance requirements, and two modes
+(automatic simulation and interactive). Logs all access attempts with
+grant/deny decisions. Fixed indentation errors in main function.
+
+5. Local Solana Test Validator Deployment - Complete
+Resolved SOL token faucet rate limiting by deploying local Solana test
+validator as recommended by lecturer. Configured solana-cli to use
+http://localhost:8899 endpoint, providing 500,000,000 SOL for unlimited
+testing. Updated all 3 blockchain scripts (auth_logger.py,
+backup_verifier.py, audit_query.py) to use local validator.
+Added .gitignore rules for test-ledger directory.
+
+6. GitHub Repository Management - Complete
+Successfully committed all IoMT device simulators and updated
+blockchain scripts to GitHub. Resolved branch divergence between
+local and remote using merge strategy. Configured .gitignore to exclude
+generated log files (*.json, test-ledger/). All blockchain scripts tested
+successfully with local validator showing 500M SOL balance and
+functional transaction capability.
+
+7 No items were delayed - Delayed
+
+Plans for the next period:
+
+1. Enable Live Blockchain Transactions
+Remove test/simulation mode from blockchain scripts and implement actual
+transaction submission to local Solana validator. Modify auth_logger.py to submit
+real transactions with confirmation handling and error recovery for failed
+transactions.
+
+2. Ubuntu Server EHR Database Deployment
+Deploy Ubuntu Server VM in DATA VLAN (192.168.40.20), install PostgreSQL,
+execute schema_setup.py to create database structure, and run
+synthea_loader.py to populate with 1000 synthetic patient records. Verify
+database accessibility from Clinical VLAN.
+
+3. IoMT Device Integration Testing
+Test all three IoMT simulators (patient monitor, infusion pump, access control)
+running concurrently. Verify VLAN isolation prevents device-to-device
+communication, validate data transmission to EHR server API endpoints, and
+confirm blockchain audit logging captures all device events.
+
+4. MFA and Conditional Access Implementation
+Deploy Multi-Factor Authentication using TOTP for all user logins. Implement time-
+based conditional access policies restricting authentication to shift hours.
+Configure pfSense to enforce location-based access rules and integrate with
+Active Directory for centralized policy management.
+
+5. Attack Simulation Preparation
+Install and configure Atomic Red Team on Kali Linux VM. Prepare LYNX
+ransomware simulation scenarios targeting Clinical VLAN using MITRE ATT&CK
+techniques: T1566.002 (phishing), T1003.001 (credential dumping), T1021 (lateral
+movement), T1486 (encryption). Set up metrics collection scripts for containment
+effectiveness measurement.
+
