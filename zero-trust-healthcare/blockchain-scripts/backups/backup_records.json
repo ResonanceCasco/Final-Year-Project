@@ -2,8 +2,8 @@
   "ehr_backup_2026_02_23": {
     "backup_name": "ehr_backup_2026_02_23",
     "filepath": "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthcare/blockchain-scripts/backups/test_backup.txt",
-    "hash": "c80c2e1dc78c19b52e3f73300cff5701cd8b1faacd7b8a5295ea45d1963e910e",
+    "hash": "581cd47304d2e862c225331054690387a0cab4420f1b89044f91c137f30c37a8",
     "size_bytes": 136,
-    "timestamp": "2026-03-27T12:06:17.606010"
+    "timestamp": "2026-04-03T11:26:38.722061"
   }
 }
