@@ -34,7 +34,7 @@ class AuthLogger:
         """
         Log authentication event to blockchain
         event_data = {
-            'user': 'jdoe',
+            'user': 'ssharkey',
             'action': 'login',
             'result': 'success',
             'timestamp': '2026-02-22T12:00:00Z',
@@ -43,26 +43,85 @@ class AuthLogger:
         }
         """
         try:
+            from solders.transaction import Transaction
+            from solders.message import Message
+            from solders.instruction import Instruction, AccountMeta
+            from solders.pubkey import Pubkey
+            from solders.system_program import ID as SYS_PROGRAM_ID
+            
             # Convert event to JSON string for memo
             event_json = json.dumps(event_data)
 
-            # Create transaction with memo (event data sotred in memo field)
-            # For now, just print - actual transaction needs SOL
-            print(f"\n[AUDIT LOG] Would log to blockchain:")
+            # Create memo instruction (stores audit data on-chain)
+            MEMO_PROGRAM_ID = Pubkey.from_string("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr")
+            memo_ix = Instruction(
+                program_id=MEMO_PROGRAM_ID,
+                accounts=[],
+                data=event_json.encode('utf-8')
+            )
+
+            # Get recent blockhash
+            recent_blockhash = self.client.get_latest_blockhash().value.blockhash
+
+            # Create transaction
+            message = Message.new_with_blockhash(
+                [memo_ix],
+                self.keypair.pubkey(),
+                recent_blockhash
+            )
+            
+            txn = Transaction([self.keypair], message, recent_blockhash)
+
+            # Send transaction
+            print(f"\n[BLOCKCHAIN] Submitting audit log transaction...")
             print(f"  Event: {event_json}")
-            print(f"  Wallet: {self.keypair.pubkey()}")
-            print(f"  Timestamp: {datetime.now().isoformat()}")
 
-            # When you have SOL, uncomment this to actually send:
-            # txn = Transaction()
-            # ... add memo instruction ...
-            # response = self.client.send_transaction(txn, self.keypair)
+            response = self.client.send_transaction(txn)
+            signature = str(response.value)
 
-            return {"status": "simulated", "event": event_data}
+            print(f"  Transaction confirmed!")
+            print(f"  Signature: {signature}")
+            print(f"  Explorer: htt[://localhost:8899/tx/{signature}]")
+
+            return {
+                "status": "success",
+                "signature": signature,
+                "event": event_data,
+                "timestamp": datetime.now().isoformat()
+                }
 
         except Exception as e:
-            print(f"Error logging event: {e}")
+            print(f"  Error logging event: {e}")
+            print(f"  Falling back to local storage...")
+
+            # Fallback: save locally if blockchain fails
+            self._save_local(event_data)
+
             return {"status": "error", "message": str(e)}
+
+    def _save_local(self, event_data):
+        """Save event locally if blockchain transaction fails"""
+        filename = "audit_log_local.json"
+
+        try:
+            # Load existing data
+            try:
+                with open(filename, 'r') as f:
+                    log_data = json.load(f)
+            except FileNotFoundError:
+                log_data = []
+
+            # Append new event
+            log_data.append(event_data)
+
+            # Save back
+            with open(filename, 'w') as f:
+                json.dump(log_data, f, indent=2, default=str)
+
+            print(f"    Saved locally to {filename}")
+
+        except Exception as e:
+            print(f"  Local save also failed: {e}")
 
     def query_audit_trail(self, user=None, start_date=None):
         """Query blockchain for audit events"""

@@ -17,13 +17,19 @@ LOG_DIR = "/home/jaboris/Documents/GitHub/Final-Year-Project/zero-trust-healthca
 
 class AuditQuery:
     def __init__(self):
-        """Initialise Solana connection"""
+        """Initialise audit query tool"""
+        from solana.rpc.api import Client
+        from solders.keypair import Keypair
+
+        # Connect to local validator
         self.client = Client(SOLANA_DEVNET_URL)
 
-        # Load wallet
+        # Load keypair using the absolute path defined at top
         with open(WALLET_PATH, 'r') as f:
-            secret_key = json.load(f)
-        self.keypair = Keypair.from_bytes(bytes(secret_key))
+            keypair_data = json.load(f)
+        self.keypair = Keypair.from_bytes(bytes(keypair_data))
+
+        self.local_log_file = os.path.join(LOG_DIR, "audit_events.json")
 
         print(f"Audit Query Tool inistialised")
         print(f"Wallet: {self.keypair.pubkey()}\n")
@@ -65,7 +71,7 @@ class AuditQuery:
                 filtered.append(event)
 
         print(f"Found {len(filtered)} event(s):\n")
-        for i, event in enumerate(filetered, 1):
+        for i, event in enumerate(filtered, 1):
             self._display_event(i, event)
 
         return filtered
@@ -152,12 +158,71 @@ class AuditQuery:
         print()
 
     def _load_local_events(self):
-        """Load events from local log file (simulates blockchain query)"""
-        if not os.path.exists(self.local_log_file):
-            return []
+        """Load events from blockchain transactions"""
+        print(" Querying blockchain for audit events...")
 
-        with open(self.local_log_file, 'r') as f:
-            return json.load(f)
+        try:
+            from solders.signature import Signature
+
+            # Get recent transaction signatures for our wallet
+            # This fetches the last 1000 transactions
+            signatures = self.client.get_signatures_for_address(
+                self.keypair.pubkey(),
+                limit=1000
+            )
+
+            if not signatures.value:
+                print("  No transactions found on blockchain")
+                return []
+
+            events = []
+            print(f" Found {len(signatures.value)} blockchain transactions")
+            print(f" Parsing audit events...")
+
+            # Fetch and parse each transaction
+            for idx, sig_info in enumerate(signatures.value):
+                try:
+                    # The memo field always contains our JSON data!
+                    if sig_info.memo:
+                        # Format: "[length] {json_data}"
+                        # Extract just the JSON part (after the length prefix)
+                        memo_text = sig_info.memo
+
+                        # Find the first { and extract from there
+                        json_start = memo_text.find('{')
+                        if json_start != -1:
+                            json_str = memo_text[json_start:]
+
+                            try:
+                                event = json.loads(json_str)
+
+                                # Add blockchain metadata
+                                event['blockchain_signature'] = str(sig_info.signature)
+                                event['block_time'] = sig_info.block_time
+
+                                events.append(event)
+                                print(f"  Parsed event for user: {event.get('user')}")
+
+                            except json.JSONDecodeError as je:
+                                print(f"  Failed to parse JSON: {je}")
+                                continue
+
+                except Exception as e:
+                    print(f"  Error processing signature: {e}")
+                    continue
+            print(f"  Retrieved {len(events)} audit events from blockchain\n")
+            return events
+
+        except Exception as e:
+            print(f"  Blockchain query failed: {e}")
+            print(f"  Falling back to local file...")
+
+            # Fallback to local file
+            if not os.path.exists(self.local_log_file):
+                return []
+
+            with open(self.local_log_file, 'r') as f:
+                return json.load(f)
 
     def _save_test_events(self):
         """Create test events for demonstration"""

@@ -76,17 +76,74 @@ class BackupVerifier:
             "timestamp": timestamp
         }
 
-        # Log to blockchain (simulated for now)
-        print(f"\n[BLOCKCHAIN] Would store:")
-        print(f"  Backup: {backup_name}")
-        print(f"  Hash: {file_hash}")
-        print(f"  Size: {file_size} bytes")
-        print(f"  Time: {timestamp}")
+        try:
+            from solders.transaction import Transaction
+            from solders.message import Message
+            from solders.instruction import Instruction
+            from solders.pubkey import Pubkey
 
-        # Save locally as well
-        self._save_local_record(backup_record)
+            # Convert backup record to JSON for memo
+            record_json = json.dumps(backup_record)
 
-        return {"status": "simulated", "hash": file_hash, "record": backup_record}
+            # Create memo instruction
+            MEMO_PROGRAM_ID = Pubkey.from_string("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr")
+            memo_ix = Instruction(
+                program_id=MEMO_PROGRAM_ID,
+                accounts=[],
+                data=record_json.encode('utf-8')
+            )
+
+            # Get recent blockhash
+            blockhash_resp = self.client.get_latest_blockhash()
+            recent_blockhash = blockhash_resp.value.blockhash
+
+            # Create transaction
+            message = Message.new_with_blockhash(
+                [memo_ix],
+                self.keypair.pubkey(),
+                recent_blockhash
+            )
+            txn = Transaction([self.keypair], message, recent_blockhash)
+
+            # Send transaction
+            print(f"\n[BLOCKCHAIN] Storing backup hash on-chain...")
+            print(f"  Backup: {backup_name}")
+            print(f"  Hash: {file_hash}")
+            print(f"  Size: {file_size} bytes")
+            
+            response = self.client.send_transaction(txn)
+            signature = str(response.value)
+
+            print(f"   Transaction confirmed!")
+            print(f"   Signature: {signature}")
+            print(f"   Blockchain proof: Backup hash is now immutable")
+
+
+            # Also save locally for quick verification
+            self._save_local_record(backup_record)
+    
+            return {
+                "status": "success",
+                "signature": signature,
+                "hash": file_hash, 
+                "record": backup_record
+                }
+
+        except Exception as e:
+            import traceback
+            print(f"   Blockchain storage failed: {e}")
+            print(f"   Error details: {traceback.format_exc()}")
+            print(f"   Falling back to local storage only...")
+
+            # Fallback: save locally
+            self._save_local_record(backup_record)
+
+            return {
+                "status": "error",
+                "message": str(e),
+                "hash": file_hash,
+                "record": backup_record
+            }
 
     def verify_backup_integrity(self, backup_name, filepath):
         """
