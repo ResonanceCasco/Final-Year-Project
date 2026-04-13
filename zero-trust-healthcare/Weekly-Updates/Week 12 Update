@@ -1,0 +1,115 @@
+Activities carried out this week:
+
+1. Fix IoMT Device Display Issue - In Progress
+Debugging and resolving "Error loading device data" on dashboard.
+Investigate IoMT device log file locations and path configurations.
+Verifying JSON log file formats match expected schema for
+patient_monitor.py, infusion_pump.py, and access_control.py. Updating
+IOMT_DIR path in app.py if necessary. Testing dashboard with all 3
+IoMT simulators running concurrently to ensure real-time device status
+updates display correctly with last transmission timestamps and device
+activity indicators.
+
+2. Dashboard Backend Enhancement - Complete
+Completely rewrote Flask dashboard app.py to integrate live blockchain
+data. Added 10 new API endpoints: /api/blockchain-events (retrieves
+events from blockchain via audit_query.py), /api/blockchain-stats
+(calculates statistics from blockchain transactions), /api/iomt-status
+(reads IoMT device logs), /api/high-risk-events (queries high-risk
+authentication events), /api/failed-logins (tracks suspicious login
+patterns). Implemented direct import of AuditQuery class for real-time
+blockchain queries. Added comprehensive error handling and fallback
+mechanisms for all API endpoints.
+
+3. Dashboard Frrontend Redesign - Complete
+Created professional real-time monitoring dashboard with modern UI
+design using gradient backgrounds, card-based layout, and responsive
+grid system. Implemented 7 dashboard sections: Zero Trust Metrics,
+Blockchain Status, Backup Verification, Live Blockchain Audit Trail,
+Network VLANs, IoMT Devices, High-Risk Events. Added auto-refresh
+functionality polling all endpoints every 5 seconds. Integrated visual
+status indicators with color-coded badges (green for success, red for
+failures, amber for warnings). Implemented blockchain transaction
+signature display with monospace font formatting.
+
+4. Live Blockchain Data Visualisation - Complete
+Successfully integrated blockchain audit trail display showing real-time
+events retrieved directly from Solana local validator. Dashboard
+displays: user authentication events with timestamps, risk scores with
+color-coding, blockchain transaction signatures (truncated for
+readability), IP addresses and action types. Statistics panel shows: total
+transactions (4), authentication events (4), failed logins (2), high-risk
+events (2), immutability verification (100%). Blockchain status badge
+indicates "Connected" to local validator with wallet address displayed.
+
+5. Zero Trust Metrics Dashboard Panel - Complete
+Created dedicated metrics visualisation showing: Containment
+Effectiveness (91.7%), Lateral Movement Blocked (100%),
+Microsegmentation status (enabled), Least Privilege enforcement
+(enforced). Integrated network security metrics: 4 active VLANs with
+descriptions, 12 active firewall rules, blocked attempts counter. Visual
+VLAN cards display subnet information, gateway addresses, device
+counts, and operational descriptions for Clinical, Admin, IoT, and Data
+VLANs.
+
+6. High-Risk Event Detection & Display - Complete
+Implemented high-risk event monitoring pulling data from
+audit_query.py's query_high_risk_events() function. Dashboard displays
+events with risk score ≥50 in dedicated panel with red warning styling.
+Successfully detected and displayed ghouse user's failed login attempts
+(risk score 75) from blockchain. Event details include: username, action
+type, timestamp, source IP address, and risk score with color-coded
+severity indicators. Panel shows "No high-risk events detected" when
+system is secure.
+
+7. No items delayed
+
+Plans for the next period:
+
+1. Fix IoMT Device Display Issue
+Debug and resolve "Error loading device data" on dashboard. Investigate IoMT
+device log file locations and path configurations. Verify JSON log file formats
+match expected schema for patient_monitor.py, infusion_pump.py, and
+access_control.py. Update IOMT_DIR path in app.py if necessary. Test dashboard
+with all 3 IoMT simulators running concurrently to ensure real-time device status
+updates display correctly with last transmission timestamps and device activity
+indicators.
+
+2. End-to-End Integration Testing
+Conduct comprehensive workflow testing: run all 3 IoMT devices simultaneously
+sending data, execute auth_logger.py to create authentication events, run
+backup_verifier.py to store backup hashes, verify all events appear on dashboard
+within 5-second refresh window. Test dashboard displays: IoMT device status
+updates, blockchain transaction feed, high-risk event alerts, backup verification
+status. Validate auto-refresh functionality maintains data consistency across all
+panels.
+
+3. Dashboard Feature Enhancements
+Add Chart.js visualisations for time-series data: authentication timeline graph
+showing login patterns over time, risk score distribution histogram, failed login
+attempt trends. Implement filtering capabilities: filter blockchain events by user,
+date range, or event type. Add transaction detail modal: click blockchain signature
+to view full transaction details. Create downloadable audit reports: export
+blockchain audit trail as CSV or PDF for compliance documentation. Add
+dashboard statistics summary cards showing 24-hour activity metrics.
+
+4. Attack Simulation Testing
+Install and configure Atomic Red Team on Kali Linux VM. Prepare LYNX
+ransomware simulation targeting Clinical VLAN using MITRE ATT&CK techniques:
+T1566.002 (spearphishing link), T1003.001 (LSASS credential dumping), T1021
+(remote services lateral movement), T1486 (data encryption for impact). Set up
+baseline metrics collection before attack. Execute simulation while monitoring
+dashboard for real-time containment visualisation. Collect metrics: detection time,
+containment effectiveness, lateral movement prevention, systems compromised vs
+protected.
+
+5. Multi-Factor Authentication (MFA) Implementation
+Deploy TOTP-based MFA using pyotp Python library. Integrate with Active
+Directory authentication workflow. Configure pfSense to enforce MFA challenges
+after primary authentication. Implement 6-digit code generation with 30-second
+validity windows. Create MFA enrollment process for test users (ssharkey,
+ghouse, mratched). Test MFA enforcement across all VLANs with blockchain
+logging of MFA events (success/failure). Implement account lockout after 3 failed
+MFA attempts. Create emergency "break glass" admin bypass for system
+recovery scenarios.
+
