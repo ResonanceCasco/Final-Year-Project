@@ -1,0 +1,97 @@
+Activities carried out this week:
+
+1. Dashboard Enhancement for Blockchain Data - In Progress
+Update Flask dashboard (app.py) to query blockchain via
+audit_query.py and display real-time audit events. Create Chart.js
+visualisations for: authentication timeline, failed login attempts, high-risk
+events, IoMT device activity. Implement live blockchain transaction feed
+showing recent events as they occur. Add blockchain verification status
+indicators (transaction signatures, block times, confirmation status).
+Test dashboard refresh displaying newly created blockchain
+transactions within 5-second polling interval.
+
+2. Live Blockchain Transactions - auth_logger.py - Complete
+Converted auth_logger.py from simulation mode to actual blockchain
+transaction submission. Implemented Solana Memo Program
+integration for storing authentication events on-chain. Added transaction
+confirmation handling with signature verification. Implemented fallback
+to local JSON storage if blockchain fails. Successfully tested with real
+transactions showing confirmation signatures and immutable storage.
+Fixed blockhash typo bug (blockchash → blockhash).
+
+3. Live Blockchain Transactions - backup_verifier.py - Complete
+Updated backup_verifier.py to submit real backup hash storage
+transactions to blockchain. Integrated Memo Program for immutable
+hash storage with SHA-256 cryptographic verification. Successfully
+tested backup integrity verification detecting file tampering through hash
+mismatch. Blockchain now provides cryptographic proof of backup
+integrity with transaction signatures. Fixed same blockhash spelling
+error.
+
+4. Live Blockchain Transactions - audit_query.py - Complete
+Completely rewrote audit_query.py to retrieve actual transactions from
+Solana blockchain instead of simulated data. Implemented blockchain
+query using get_signatures_for_address() API. Discovered memo field
+optimisation - extracted JSON directly from signature response memo
+field instead of fetching full transaction details (significant performance
+improvement). Successfully parsed authentication events with
+blockchain metadata (signature, block_time). All query functions
+operational: query_by_user, query_failed_logins,
+query_high_risk_events, generate_timeline.
+
+5. Blockchain Integration Testing & Debugging - Complete
+Extensive debugging session identifying and resolving transaction
+retrieval issues. Discovered local validator ledger resets causing
+transaction loss. Implemented debug logging to trace transaction
+structure and data flow. Validated end-to-end blockchain workflow:
+auth_logger creates transactions → audit_query retrieves and parses
+them. Confirmed immutable audit trail functionality with 2 test events
+(ssharkey login success, ghouse login failed). Verified high-risk event
+detection (ghouse risk score 75).
+
+6. No items were delayed
+
+Plans for the next period:
+
+1. Ubuntu Server EHR Database Deployment
+Deploy Ubuntu Server 22.04 LTS VM in DATA VLAN (192.168.40.20) with 1.5GB
+RAM, 1 vCPU, 60GB storage. Install and configure PostgreSQL database server.
+Execute schema_setup.py to create database structure (patients,
+medical_records, encounters, practitioners tables). Run synthea_loader.py to
+populate database with 1000 synthetic patient FHIR records. Test ehr_query.py
+for data retrieval and verify database accessibility from Clinical VLAN
+workstations.
+
+2. IoMT to EHR Integration
+Configure all 3 IoMT device simulators (patient_monitor.py, infusion_pump.py,
+access_control.py) to communicate with EHR API endpoints instead of local JSON
+storage. Create Flask API endpoints on EHR server (/api/vitals, /api/infusion,
+/api/access) to receive device data. Test concurrent operation of all 3 devices
+sending data simultaneously. Verify data persistence in PostgreSQL database.
+Validate VLAN isolation prevents direct device-to-device communication.
+
+3. Blockchain Integration with IoMT Events
+Extend blockchain audit logging to capture IoMT device events in addition to
+authentication events. Modify IoMT simulators to log all data transmissions to
+blockchain via auth_logger.py API. Test audit_query.py retrieval of mixed event
+types (authentication + device data). Verify complete audit trail includes: user
+logins, device authentications, vitals transmissions, medication deliveries, access
+control events. Dashboard visualisation of IoMT blockchain events.
+
+4. MFA Implementation
+Deploy Time-based One-Time Password (TOTP) authentication using Python
+libraries (pyotp). Integrate MFA with Active Directory authentication flow in
+pfSense. Configure 6-digit code generation with 30-second time windows. Test
+MFA enforcement for all user login attempts across VLANs. Implement emergency
+"break glass" admin account for system recovery. Document MFA enrollment
+process and test account lockout after 3 failed attempts.
+
+5. Dashboard Enhancement for Blockchain Data
+Update Flask dashboard (app.py) to query blockchain via audit_query.py and
+display real-time audit events. Create Chart.js visualisations for: authentication
+timeline, failed login attempts, high-risk events, IoMT device activity. Implement
+live blockchain transaction feed showing recent events as they occur. Add
+blockchain verification status indicators (transaction signatures, block times,
+confirmation status). Test dashboard refresh displaying newly created blockchain
+transactions within 5-second polling interval.
+
