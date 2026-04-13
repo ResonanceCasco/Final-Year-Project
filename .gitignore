@@ -1,1 +1,4 @@
 *.jar
+zero-trust-healthcare/blockchain-scripts/__pycache__/
+**/__pycache__/
+*.pyc
