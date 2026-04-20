@@ -1,0 +1,127 @@
+Activities carried out this week
+1. Enhanced Chart Interactivity - In Progress
+Adding a click-to-zoom functionality for all charts allowing detailed time
+period examination. Implement chart filtering: allow users to filter
+timeline by date range, filter risk distribution by specific users, filter
+event types by action (login/logout/admin_access). Add data export
+buttons: download chart data as CSV for compliance reporting, export
+charts as PNG images for documentation. Implement chart tooltips
+showing detailed event information on hover: full timestamp, username,
+source IP, risk score. Create chart animation effects for smoother data
+updates on refresh cycles.
+
+2. IoMT Device Display Bug Fix - Complete
+Debugged and resolved "Error loading device data" issue on
+dashboard. Discovered IoMT log files (vitals_log_MONITOR-001.json,
+infusion_log_PUMP-001.json) were saved in project root instead of
+IoMT-Devices directory. Moved log files to correct location using mv
+command. Fixed typo in app.py backend code: "last_trasmission" →
+"last_transmission" (missing 'n'). Fixed JavaScript typo in index.html:
+"deive" → "device" on line 513. Dashboard now successfully displays all 
+3 IoMT devices with real-time status, last transmission timestamps, and
+device data (vitals, pump status, access control events).
+
+3. Chart.js Library Integration - Complete
+Integrated Chart.js v4.4.0 visualisation library into dashboard frontend.
+Added Chart.js CDN link in HTML head section. Created three canvas
+elements for chart rendering: timelineChart, riskChart, eventTypeChart
+with max-height constraints (300px). Fixed CDN URL typo: "jdselivr" →
+"jsdelivr" preventing library from loading. Implemented global chart
+instances to enable proper chart destruction and recreation on data
+updates. Charts auto-refresh every 5 seconds synchronised with
+dashboard polling cycle.
+
+4. Authentication Timeline Chart - Complete
+Created interactive line chart visualising authentication events over time
+grouped by hour. Implemented data aggregation logic: events grouped
+by hour with counts summed per time period. Chart displays hour labels
+(e.g., "12:00", "13:00") on X-axis and event counts on Y-axis. Styling:
+purple line color (#667eea) matching dashboard theme, filled area with
+transparency, smooth curve tension (0.4), responsive sizing. Fixed
+multiple variable naming bugs: "hoursCounts" → "hourCounts", "keys"
+→ "key". Chart shows clear peaks during high-activity periods (observed
+20 events at 12:00 hour).
+
+5. Risk Score Distribution Bar Chart - Complete
+Developed bar chart categorising blockchain events by risk severity
+levels. Risk categories: Low (0-29 score), Medium (30-59 score), High
+(60+ score). Color-coded bars: green for low risk, amber for medium
+risk, red for high risk with 80% opacity and solid borders. Implemented
+event counting logic iterating through all blockchain events to categorise
+by risk_score field. Chart displays current distribution: approximately 10
+low-risk events, 0 medium-risk events, 10 high-risk events from 28 total
+blockchain transactions. Y-axis configured with stepSize: 1 for discrete
+event counting.
+
+6. Event Type Breakdown Doughnut Chart - Complete
+Created doughnut (donut) chart showing proportion of successful vs
+failed authentication attempts. Binary categorisation: counts events
+where result === 'success' or result === 'failed'. Color scheme: green
+(#10b981) for successful logins, red (#ef4444) for failed attempts with
+matching borders. Chart displays approximately 50/50 split between
+successful and failed events (14 successful, 14 failed from 28 total).
+Legend positioned at bottom of chart for clear labeling. Responsive
+design maintains aspect ratio and readability. Chart effectively
+visualises authentication security status at a glance.
+
+7. No items were delayed
+
+Plans for the next period
+1. Enhanced Chart Interactivity
+Adding a click-to-zoom functionality for all charts allowing detailed time period
+examination. Implement chart filtering: allow users to filter timeline by date range,
+filter risk distribution by specific users, filter event types by action
+(login/logout/admin_access). Add data export buttons: download chart data as
+CSV for compliance reporting, export charts as PNG images for documentation.
+Implement chart tooltips showing detailed event information on hover: full
+timestamp, username, source IP, risk score. Create chart animation effects for
+smoother data updates on refresh cycles.
+
+2. Attack Simulation Execution
+Install Atomic Red Team framework on Kali Linux VM. Configure attack simulation
+targeting Clinical VLAN (192.168.10.0/24). Execute MITRE ATT&CK techniques:
+T1566.002 (spearphishing attachment), T1003.001 (OS credential dumping -
+LSASS), T1021.001 (remote desktop protocol lateral movement), T1486 (data
+encrypted for impact). Capture baseline metrics before attack: normal
+authentication patterns, typical network traffic, system resource usage. Monitor
+dashboard in real-time during attack execution to observe: containment
+effectiveness visualisation, blockchain audit trail recording all attempts, high-risk
+event alerts triggering.
+
+3. Attack Metrics Collection & Analysis
+Collect quantitative metrics from attack simulation: detection time (seconds from
+initial compromise to first alert), containment percentage (systems protected / total
+systems × 100), lateral movement prevention (blocked attempts / total attempts ×
+100), systems compromised count, recovery time from attack detection to full
+restoration. Document qualitative observations: effectiveness of
+microsegmentation in preventing cross-VLAN spread, blockchain audit trail
+completeness and immutability verification, dashboard real-time alert accuracy.
+Compare Zero Trust architecture performance against traditional perimeter-based
+network baseline. Generate statistical analysis using Python Pandas library and
+Matplotlib visualisations.
+
+4. Multi-Factor Authentication (MFA) Deployment
+Implement TOTP-based MFA using pyotp Python library integrated with
+authentication workflow. Configure pfSense to intercept authentication requests
+and enforce MFA challenge after primary credentials validation. Create MFA
+enrollment scripts generating QR codes for authenticator apps (Google
+Authenticator, Authy). Set MFA parameters: 6-digit codes, 30-second validity
+window, SHA-256 hashing algorithm. Test MFA enforcement with multiple user
+accounts: ssharkey (nurse), ghouse (doctor), mratched (nurse). Implement
+account lockout policy: 3 failed MFA attempts = 15-minute lockout. Log all MFA
+events to blockchain: enrollment, successful validation, failed attempts, lockouts.
+
+5. Final Documentation & Presentation Preparation
+Complete final technical report sections: implementation results with screenshots,
+attack simulation analysis with metrics tables, testing evaluation with success
+criteria assessment, conclusions and future work recommendations. Create
+PowerPoint presentation with professional slides: project overview, Zero Trust
+architecture diagram, blockchain integration explanation, dashboard
+demonstration screenshots, attack simulation results with before/after
+comparisons, live demo script preparation. Prepare backup demonstration videos:
+2-minute dashboard walkthrough, 3-minute attack simulation showing
+containment, 1-minute blockchain audit trail verification. Practice presentation
+delivery targeting. Prepare for Q&A session covering: technical implementation
+decisions, security trade-offs, scalability considerations, real-world deployment
+challenges.
+
