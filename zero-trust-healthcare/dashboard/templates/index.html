@@ -230,6 +230,7 @@
             padding: 10px;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -257,10 +258,28 @@
         </div>
 
         <!-- Blockchain Events Feed -->
-        <div class="grid">
+        <div class="grid-full">
             <div class="card">
                 <h2>Live Blockchain Audit Trail</h2>
                 <div id="blockchain-events" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid">
+            <div class="card">
+                <h2>Authentication Timeline</h2>
+                <canvas id="timelineChart" style="max-height: 300px;"></canvas>
+            </div>
+            
+            <div class="card">
+                <h2>Risk Score Distribution</h2>
+                <canvas id="riskChart" style="max-height: 300px;"></canvas>
+            </div>
+
+            <div class="card">
+                <h2>Event Type Breakdown</h2>
+                <canvas id="eventTypeChart" style="max-height: 300px;"></canvas>
             </div>
         </div>
 
@@ -292,6 +311,193 @@
         function updateTimestamp() {
             const now = new Date();
             document.getElementById('last-update').textContent = now.toLocaleTimeString();
+        }
+
+        // Chart.js instances (global)
+        let timelineChart = null;
+        let riskChart = null;
+        let eventTypeChart = null;
+
+        // Create Authentication Timeline Chart
+        function createTimelineChart(events) {
+            const ctx = document.getElementById('timelineChart');
+            
+            // Group events by hour
+            const hourCounts = {};
+            events.forEach(event => {
+                const date = new Date(event.timestamp);
+                const hour = date.getHours();
+                const key = `${hour}:00`;
+                hourCounts[key] = (hourCounts[key] || 0) + 1;
+            });
+
+            // Sort by hour
+            const sortedHours = Object.keys(hourCounts).sort((a, b) => {
+                return parseInt(a) - parseInt(b);
+            });
+
+            const labels = sortedHours;
+            const data = sortedHours.map(hour => hourCounts[hour]);
+
+            // Destroy existing chart if it exists
+            if (timelineChart) {
+                timelineChart.destroy();
+            }
+
+            timelineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Authentication Events',
+                        data: data,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create Risk Score Distribution Chart
+        function createRiskChart(events) {
+            const ctx = document.getElementById('riskChart');
+
+            // Categorise by risk level
+            let low = 0, medium = 0, high = 0;
+            events.forEach(event => {
+                const risk = event.risk_score || 0;
+                if (risk < 30) low++;
+                else if (risk < 60) medium++;
+                else high++
+            });
+
+            // Destroy existing chart
+            if (riskChart) {
+                riskChart.destroy();
+            }
+
+            riskChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Low Risk (0-29)', 'Medium Risk (30-59)', 'High Risk (60+)'],
+                    datasets: [{
+                        label: 'Events',
+                        data: [low, medium, high],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)', // Green
+                            'rgba(245, 158, 11, 0.8)', // Amber
+                            'rgba(239, 68, 68, 0.8)' // Red
+                        ],
+                        borderColor: [
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        lengend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create Type Breakdown Chart
+        function createEventTypeChart(events) {
+            const ctx = document.getElementById('eventTypeChart');
+
+            // Count by result
+            let success = 0, failed = 0;
+            events.forEach(event => {
+                if (event.result === 'success') success++;
+                else if (event.result === 'failed') failed++;
+            });
+
+            // Destroy existing chart
+            if (eventTypeChart) {
+                eventTypeChart.destroy();
+            }
+
+            eventTypeChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Successful', 'Failed'],
+                    datasets: [{
+                        label: 'Events',
+                        data: [success, failed],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)', // Green
+                            'rgba(239, 68, 68, 0.8)' // Red
+                        ],
+                        borderColor: [
+                            '#10b981',
+                            '#ef4444'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        lengend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load and create all carts
+        async function loadCharts() {
+            console.log("loadCharts called");
+            try {
+                const response = await fetch('/api/blockchain-events');
+                const data = await response.json();
+                console.log("Chart data:", data);
+
+                if (data.status === 'connected' && data.events.length > 0) {
+                    createTimelineChart(data.events);
+                    createRiskChart(data.events);
+                    createEventTypeChart(data.events);
+                }
+            } catch (error) {
+                console.error('Error loading charts:', error);
+            }
         }
 
         // Fetch Zero Trust metrics
@@ -579,6 +785,7 @@
             loadNetworkStatus();
             loadIoMTStatus();
             loadHighRiskEvents();
+            loadCharts();
             updateTimestamp();
         }
 
