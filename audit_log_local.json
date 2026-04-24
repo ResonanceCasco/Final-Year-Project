@@ -30,5 +30,69 @@
     "timestamp": "2026-03-30T18:42:44.224018",
     "source_ip": "192.168.10.108",
     "risk_score": 75
+  },
+  {
+    "user": "ssharkey",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-04-24T21:34:22.729472",
+    "source_ip": "192.168.10.107",
+    "risk_score": 10
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-04-24T21:34:22.749472",
+    "source_ip": "192.168.10.108",
+    "risk_score": 75
+  },
+  {
+    "user": "ssharkey",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-04-24T21:34:24.577416",
+    "source_ip": "192.168.10.107",
+    "risk_score": 10
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-04-24T21:34:24.581742",
+    "source_ip": "192.168.10.108",
+    "risk_score": 75
+  },
+  {
+    "user": "ssharkey",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-04-24T21:34:25.962419",
+    "source_ip": "192.168.10.107",
+    "risk_score": 10
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-04-24T21:34:25.965513",
+    "source_ip": "192.168.10.108",
+    "risk_score": 75
+  },
+  {
+    "user": "ssharkey",
+    "action": "login",
+    "result": "success",
+    "timestamp": "2026-04-24T21:34:27.178290",
+    "source_ip": "192.168.10.107",
+    "risk_score": 10
+  },
+  {
+    "user": "ghouse",
+    "action": "login",
+    "result": "failed",
+    "timestamp": "2026-04-24T21:34:27.182103",
+    "source_ip": "192.168.10.108",
+    "risk_score": 75
   }
 ]
